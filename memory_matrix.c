@@ -53,23 +53,23 @@ void initializeGame(GameBoard* board) {
     board->score = 0;
     board->attempts = MAX_ATTEMPTS;
     
-    // Allocate matrix
+    
     board->matrix = malloc(board->size * sizeof(Cell*));
     for (int i = 0; i < board->size; i++) {
         board->matrix[i] = malloc(board->size * sizeof(Cell));
     }
     
-    // Initialize cells with random values and pointer references
+    
     srand(time(NULL));
     int values[MATRIX_SIZE * MATRIX_SIZE];
     
-    // Create pairs of values
+    
     for (int i = 0; i < (board->size * board->size) / 2; i++) {
         values[2 * i] = 10 + rand() % 90;
         values[2 * i + 1] = values[2 * i];
     }
     
-    // Shuffle values
+    
     for (int i = 0; i < board->size * board->size; i++) {
         int j = rand() % (board->size * board->size);
         int temp = values[i];
@@ -77,7 +77,7 @@ void initializeGame(GameBoard* board) {
         values[j] = temp;
     }
     
-    // Assign values and addresses
+    
     int index = 0;
     for (int row = 0; row < board->size; row++) {
         for (int col = 0; col < board->size; col++) {
@@ -103,7 +103,7 @@ int makeGuess(GameBoard* board, int row1, int col1, int row2, int col2) {
     Cell* cell1 = &board->matrix[row1][col1];
     Cell* cell2 = &board->matrix[row2][col2];
     
-    // Temporarily reveal the cells
+    
     cell1->revealed = 1;
     cell2->revealed = 1;
     
@@ -116,11 +116,11 @@ int makeGuess(GameBoard* board, int row1, int col1, int row2, int col2) {
     printf("Cell 2 [%d,%d]: Value = %d, Address = %p\n", 
            row2, col2, cell2->value, (void*)cell2->address_ref);
     
-    // Check if the pointer addresses match the values
+    
     if (cell1->value == cell2->value) {
         printf("\n✅ MATCH FOUND! Values are equal.\n");
         
-        // Extra points if addresses are also related
+        
         if (cell1->address_ref == &cell1->value && cell2->address_ref == &cell2->value) {
             printf("✅ Pointer addresses correctly reference their own values!\n");
             board->score += 20;
@@ -128,14 +128,14 @@ int makeGuess(GameBoard* board, int row1, int col1, int row2, int col2) {
             board->score += 10;
         }
         
-        // Keep cells revealed
+        
         cell1->revealed = 1;
         cell2->revealed = 1;
         return 1;
     } else {
         printf("\n❌ NO MATCH. Values are different.\n");
         
-        // Hide cells again after delay
+        
         printf("Hiding cells in 3 seconds...\n");
         sleep(3);
         cell1->revealed = 0;
@@ -147,7 +147,7 @@ int makeGuess(GameBoard* board, int row1, int col1, int row2, int col2) {
 }
 
 int checkGameOver(GameBoard* board) {
-    // Check if all cells are revealed
+    
     for (int row = 0; row < board->size; row++) {
         for (int col = 0; col < board->size; col++) {
             if (!board->matrix[row][col].revealed) {
@@ -197,7 +197,7 @@ int main() {
         printf("Score: %d | Attempts remaining: %d\n", game.score, game.attempts);
         
         printf("\nCurrent Board (hidden values):\n");
-        printMatrix(&game, 1);  // Show addresses
+        printMatrix(&game, 1);  
         
         printf("\nEnter first cell coordinates (row col): ");
         scanf("%d %d", &row1, &col1);
@@ -227,7 +227,7 @@ int main() {
     printf("\nFinal Board:\n");
     printMatrix(&game, 0);
     
-    // Show pointer analysis
+
     printf("\n=== POINTER ANALYSIS ===\n");
     for (int row = 0; row < game.size; row++) {
         for (int col = 0; col < game.size; col++) {
@@ -243,4 +243,5 @@ int main() {
     
     printf("\nThanks for playing Memory Matrix Challenge!\n");
     return 0;
+
 }
