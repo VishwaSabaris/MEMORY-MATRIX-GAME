@@ -118,11 +118,11 @@ int makeGuess(GameBoard* board, int row1, int col1, int row2, int col2) {
     
     
     if (cell1->value == cell2->value) {
-        printf("\n✅ MATCH FOUND! Values are equal.\n");
+        printf("\n MATCH FOUND! Values are equal.\n");
         
         
         if (cell1->address_ref == &cell1->value && cell2->address_ref == &cell2->value) {
-            printf("✅ Pointer addresses correctly reference their own values!\n");
+            printf(" Pointer addresses correctly reference their own values!\n");
             board->score += 20;
         } else {
             board->score += 10;
@@ -133,7 +133,7 @@ int makeGuess(GameBoard* board, int row1, int col1, int row2, int col2) {
         cell2->revealed = 1;
         return 1;
     } else {
-        printf("\n❌ NO MATCH. Values are different.\n");
+        printf("\n NO MATCH. Values are different.\n");
         
         
         printf("Hiding cells in 3 seconds...\n");
@@ -218,9 +218,9 @@ int main() {
     printf("\n=== GAME OVER ===\n");
     
     if (checkGameOver(&game)) {
-        printf("\n🎉 CONGRATULATIONS! You've revealed all cells!\n");
+        printf("\n CONGRATULATIONS! You've revealed all cells!\n");
     } else {
-        printf("\n😔 Out of attempts! Better luck next time.\n");
+        printf("\n Out of attempts! Better luck next time.\n");
     }
     
     printf("\nFinal Score: %d\n", game.score);
@@ -245,3 +245,4 @@ int main() {
     return 0;
 
 }
+
